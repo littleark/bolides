@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale=1.0, user-scalable=yes" />
+	<title>BOLIDES - Visualizing meteorites</title>
+	<meta name="description" content="Thousands of meteorites have collided with the Earth since 2500 BC. 45,716 have been recorded. Only 1,107 have been seen falling." >
+	<meta name="author" content="Carlo Zapponi"/>
+	<link rel="Shortcut Icon" href="/favicon.ico" type="image/x-icon" />
+	
+	<meta property="og:title" content="BOLIDES - Visualizing meteorites">
+	<meta property="og:url" content="http://www.bolid.es">
+	<meta property="og:type" content="website">
+	<meta property="og:description" content="Thousands of meteorites have collided with the Earth since 2500 BC. more than 45,000 have been recorded. Only 1,150 have been seen falling. http://www.bolid.es" >
+	<meta property="og:image" content="http://www.bolid.es/img/open_graph.png">
+	
+	<link href='http://fonts.googleapis.com/css?family=PT+Sans:300,400,700,400italic' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="css/normalize.css">
+	<!--[if gte IE 9]>
+		<style type="text/css">
+			.gradient {
+				filter: none;
+			}
+		</style>
+	<![endif]-->
+	<link rel="stylesheet" href="css/m.css?2">
+	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+	<script src="js/libs/country_codes.js" charset="utf-8"></script>
+</head>
+<body>
+	<div id="canvas_container">
+		<div id="canvas">
+			<canvas id="falling"></canvas>
+			<div id="ground" class="gradient"></div>
+			<div id="info">
+				<h6><span></span></h6>
+				<ul></ul>
+				<a href="#" id="plus"><i class="icon-plus-circled"></i><i class="icon-cancel-circled"></i></a>
+				<span id="gauge"></span>
+			</div>
+		</div>
+		<div id="controls">
+			<a href="#" id="restart"><i class="icon-to-start"></i></a>
+			<a href="#" id="playPause"><span id="start"><i class="icon-play"></i></span><span id="pause"><i class="icon-pause"></i></span></a>
+		</div>
+		<div class="social">
+			<a class="twt" href="http://twitter.com/share?text=Bolides%20-%20Visualizing%20every%20eye-witnessed%20meteorite%20that%20hit%20the%20earth&url=http%3A%2F%2Fwww.bolid.es%2F&via=littleark&original_referer=http%3A%2F%2Fwww.bolid.es&hashtags=dataviz" target="_blank" title="Share on Twitter"><i class="icon-twitter-circled"></i><span></span></a>
+			<a class="gp" href="https://plus.google.com/share?url=www.bolid.es" target="_blank" title="Share on Google+"><i class="icon-gplus-circled"></i><span></span></a>
+			<a class="fb" href="http://facebook.com/sharer.php?u=http%3A%2F%2Fwww.bolid.es" target="_blank" title="Share on Facebook"><i class="icon-facebook-circled"></i><span></span></a>
+		</div>
+	</div>
+	<div id="year"><h1 class="logo"><i class="icon-fire-station"></i>bolides</h1><h3 class="hidden">As of <span>861</span>,<br/><b>1 meteorite</b><br/>were eye-witnessed</h3></div>
+	<div id="details" class="clearfix"><div class="clearfix"></div><div class="clearfix"></div></div>
+	<div id="contents">
+		<h2><span><b>Thousands</b> of meteorites have collided with the Earth since 2500 BC.</span> <span>More than <b>45,000</b> have been recorded.</span> <span>Only <b>1,150</b> have been seen falling.</span>
+		</h2>
+		<div id="stuff">
+			<span class="sep">&bull;</span>
+			<div class="half left">
+				<h3>found meteorites</h3>
+				<ul>
+				</ul>
+			</div>
+			<div class="half right">
+				<h3>fell meteorites</h3>
+				<ul>
+				</ul>
+			</div>
+			<span class="sep">&bull;</span>
+			<div class="description">
+				<h5>Bolides - The project</h5>
+				<p>
+					BOLIDES is an attempt to visualize and explore the meteorites that have collided with the Earth. The visualization focuses mainly on meteorites that were eye-witnessed when falling and hitting the ground.
+					<br>
+					<br/>
+					Most meteorite falls are recovered on the basis of eye-witness accounts of the fireball or the impact of the object on the ground. 
+					Meteorites fall with virtually equal probability everywhere on the Earth, eye-witnessed meteorites tend to be concentrated in areas with high human population densities such as Europe, Japan, and northern India.
+				</p>
+			</div>
+			<span class="sep">&bull;</span>
+			<div class="description">
+				<h5>Bolide - The meteorite</h5>
+				<p>A meteorite is a solid piece of debris from a body originating in outer space that survives the impact with the Earth's surface. The mass of a meteorite can range from few grams to several tonnes. When a body enters the atmosphere the body to heat up and emits light, thus forming a fireball, also known as a meteor or shooting/falling star.</p>
+				<p>The word <i>bolide</i> comes from Greek <b>βολίς</b> <i>bolis</i>, which means <i>missile</i>.
+				 Astronomers tend to use bolide to identify an exceptionally bright fireball, particularly one that explodes.
+				</p>
+			</div>
+			<span class="sep">&bull;</span>
+			<div class="description">
+				<h5>Data and Source</h5>
+				<p> The data comes from <a href="http://www.lpi.usra.edu/meteor/metbull.php" target="_blank" title="The Meteoritical Society">The Meteorite Bulletin</a>, constructed and maintained by the Nomenclature Committee of the Meteoritical Society.<br/>
+				<br/>
+				The database contains information about each meteorite, including the classification, place and year of discovery, whether if was observed to fall, references to catalogues in which the meteorite is described, and known synonyms that may be encountered in the literature.<br/>
+				<br/>
+				The database indexes several catalogues, including the <a href="http://www.nhm.ac.uk/jdsml/research-curation/research/projects/metcat/" target="_blank">Catalogue of Meteorites</a> from the Natural History Museum in London, the commercial program <a href="http://www.metbase.de/" target="_blank">MetBase</a>, the <a href="http://www-curator.jsc.nasa.gov/antmet/amn/amn.cfm" target="_blank">Antarctic Meteorite Newsletter</a>, and the <a href="http://meteoriticalsociety.org/simple_template.cfm?code=pub_bulletin" target="_blank">Meteoritical Bulletin</a>. It contains detailed information about the meteorites, including narratives of the discovery, mineralogy, petrology, specimen locations, chemical and isotopic composition, and references to the literature. The primary source of information in this database is the Catalogue of Meteorites.<br/>
+				<br/>
+				The primary set includes more than 45,000 recordings of <i>found</i> and <i>fell</i> meteorites. A meteorite is classified as <i>fell</i> if it has been observed by people or automated devices during its fall.<br/>
+				BOLIDES shows all the known <i>fell</i> meteorites that have not been classified as <i>doubtful</i> or <i>discredited</i>.
+				<br/><br/>
+				<i>Dataset last updated on 30th August 2016</i>
+				<!--<br/><br/>
+				You can download the original dataset (updated on 14th May 2013) at <a href="http://visualizing.org/datasets/meteorite-landings" target="_blank">Visualizing.org</a>.--></p>
+			</div>
+			<span class="sep">&bull;</span>
+			<div class="description">
+				<h5>Acknowledgements</h5>
+				<p>When I designed BOLIDES I found a big source of inspiration in the awesome project <a href="http://guns.periscopic.com/" target="_blank">GUN Murders by Periscopic</a>. This great piece of data art combines a strong narrative with a large set of numbers in a way I had not seen before.</p>
+			</div>
+		</div>
+	</div>
+	<div id="footer" class="clearfix transparent hidden">
+		<h1 class="logo"><i class="icon-fire-station"></i><br/>bolides<br/><span>a project by <a href="http://www.makinguse.com" target="_blank" title="">Carlo Zapponi</a></span></h1>
+		<div class="social">
+			<a href="http://twitter.com/share?text=Bolides%20-%20Visualizing%20every%20eye-witnessed%20meteorite%20that%20hit%20the%20earth&url=http%3A%2F%2Fwww.bolid.es%2F&via=littleark&original_referer=http%3A%2F%2Fwww.bolid.es&hashtags=dataviz" target="_blank" title="Share on Twitter"><i class="icon-twitter-circled"></i></a>
+			<a href="https://plus.google.com/share?url=www.bolid.es" target="_blank" title="Share on Google+"><i class="icon-gplus-circled"></i></a>
+			<a href="http://facebook.com/sharer.php?u=http%3A%2F%2Fwww.bolid.es" target="_blank" title="Share on Facebook"><i class="icon-facebook-circled"></i></a>
+			<a href="http://pinterest.com/pin/create/button/?url=http%3A//www.bolid.es&media=http%3A//www.bolid.es/img/bolides.png&description=Bolides%20-%20Visualizing%20every%20eye-witnessed%20meteorite%20that%20hit%20the%20earth" target="_blank" title="Pin it!"><i class="icon-pinterest-circled"></i></a>
+		</div>
+		<div id="licence" class="clearfix"><a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/" class="cc" target="_blank"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><div>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">Creative Commons BY-NC-SA License</a>.</div></div>
+	</div>
+	<script src="js/libs/physics.min.js"></script>
+
+	<script src="js/m2.js?3"></script>
+	<script>
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-364839-32']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+	
+</body>
+</html>
